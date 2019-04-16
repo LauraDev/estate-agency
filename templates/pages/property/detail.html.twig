@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Agence Immo' %}
+
+{% block body %}
+
+  {% if property is empty %}
+    <div class="container mt-4">
+      <h1> Ce bien n'est plus disponible.</h1>
+    </div>
+  {% else %}
+    <div class="jumbotron">
+      <div class="container mt-4">
+        <div class="row flex">
+          <div class="col-md-8">
+
+          </div>
+          <div class="col-md-4">
+            <h2>{{property.title}}</h2>
+            <h4>{{property.city}} ({{property.postcode}})</h4>
+            <div class="text-primary" style="font-size:2rem;font-weight:bold">{{property.formattedPrice}} €</div>
+            <a href="#"
+              class="btn btn-primary mt-4">Contacter l'agence</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-4">
+      {# <nav class="nav nav-tabs" id="property-tabs"></nav> #}
+      <div class="mt-4">
+        <p>{{property.description | nl2br}}</p> {# filter to display br if present #}
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+        <h3>Caracteristiques</h3>
+          <table class="table table-striped">
+            {% if property.surface is not null %}
+              <tr>
+                <td>Surface Habitable (m2)</td>
+                <td>{{property.surface}}</td>
+              </tr>
+            {% endif %}
+            {% if property.rooms is not null %}
+              <tr>
+                <td>Nombre de pieces</td>
+                <td>{{property.rooms}}</td>
+              </tr>
+            {% endif %}
+            {% if property.bedrooms is not null %}
+              <tr>
+                <td>Nombre de chambres</td>
+                <td>{{property.bedrooms}}</td>
+              </tr>
+            {% endif %}
+            {% if property.floor is not null %}
+              <tr>
+                <td>Etage</td>
+                <td>{{property.floor}}</td>
+              </tr>
+            {% endif %}
+            {% if property.heat is not null %}
+              <tr>
+                <td>Chauffage</td>
+                <td>{{property.heatType}}</td>
+              </tr>
+            {% endif %}
+          </table>
+
+        </div>
+        <div class="col-md-4">
+          <h3>Specificites</h3>
+        </div>
+      </div>
+    </div>
+
+  {% endif %}
+
+{% endblock %}

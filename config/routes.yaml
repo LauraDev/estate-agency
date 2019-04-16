@@ -1,0 +1,13 @@
+home:
+  path: /
+  controller: App\Controller\HomeController::index
+
+property.list:
+  path: /acheter
+  controller: App\Controller\PropertyController::list
+
+property.detail:
+  path: /acheter/{slug}-{id}
+  requirements: 
+    slug: '[a-z0-9\-]*'
+  controller: App\Controller\PropertyController::detail

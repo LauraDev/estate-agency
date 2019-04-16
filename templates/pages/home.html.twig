@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Agence Immo' %}
+
+{% block body %}
+  <div class="jumbotron text-center">
+    <div class="container">
+      <h1>Agence Immobiliere</h1>
+      <p>Adipisicing fugiat sunt laboris consectetur incididunt est dolore nisi eiusmod. Excepteur dolor deserunt cupidatat ex amet sunt aute culpa. Quis eu tempor veniam ex ad pariatur et qui est laboris adipisicing anim. Qui excepteur excepteur enim cupidatat exercitation excepteur aute pariatur consectetur consequat mollit. Amet ipsum nulla voluptate eiusmod aute laboris voluptate veniam do amet culpa. Esse veniam est deserunt qui et incididunt officia culpa voluptate et exercitation aute. Sit nostrud anim voluptate veniam qui do reprehenderit in ipsum id proident adipisicing esse velit.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    {% if latest is empty %}
+      <div>
+        <p> Aucun bien n'est a vendre pour le moment.</p>
+      </div>
+    {% else %}
+      <h2>Les derniers biens a vendre</h2>
+      <div class="row flex">
+        {% for property in latest %}
+          <div class="col-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="card-title">
+                  <h3>
+                    <a href="{{ path('property.detail', {slug: property.slug, id: property.id} ) }}">{{property.title}}</a>
+                  </h3>
+                  <p class="card-text">{{property.city}} ({{property.postcode}})</p>
+                  <div class="text-primary">{{property.formattedPrice}} €</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
+{% endblock %}

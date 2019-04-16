@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Acheter un bien' %}
+
+{% block body %}
+  <div class="container mt-4">
+    <h1>Acheter</h1>
+
+    {% if properties is empty %}
+      <div>
+        <p> Aucun bien n'est a vendre pour le moment.</p>
+      </div>
+    {% else %}
+      {% for property in properties %}
+        {{ property.title }}
+      {% endfor %}
+    {% endif %}
+  </div>
+{% endblock %}

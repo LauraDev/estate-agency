@@ -12,6 +12,13 @@ property.detail:
     slug: '[a-z0-9\-]*'
   controller: App\Controller\PropertyController::detail
 
+admin:
+  path: /admin
+  controller: App\Controller\SecurityController::login
+
+logout:
+  path: /deconnexion
+
 admin.property.index:
   path: /admin/property
   controller: App\Controller\Admin\AdminPropertyController::index

@@ -5,21 +5,23 @@
 {% block body %}
 
   <div class="container mt-4">
+
+    <h1>Gerer les biens</h1>
+
+    {% for message in app.flashes('success') %}
+      <div class="alert alert-info"> {{message}} </div>
+    {% endfor %}
+
+    <div class="text-right">
+      <a href="{{ path('admin.property.create')}}"
+        class="btn btn-primary">Ajouter un bien</a>
+    </div>
+
     {% if properties is empty %}
       <div>
         <p> Aucun bien n'est a administrer pour le moment.</p>
       </div>
     {% else %}
-      <h1>Gerer les biens</h1>
-
-      {% for message in app.flashes('success') %}
-        <div class="alert alert-info"> {{message}} </div>
-      {% endfor %}
-
-      <div class="text-right">
-        <a href="{{ path('admin.property.create')}}"
-          class="btn btn-primary">Ajouter un bien</a>
-      </div>
   
       <table class="table table-striped mt-4">
         <thead>

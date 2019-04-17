@@ -1,69 +1,89 @@
 <?php
+/**
+ * PropertyController File Doc Comment
+ * PHP version 7.3
+ * 
+ * @category Class
+ * @package  Estate_Agency
+ * @author   LauraDev <contact@lauradev.fr>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     ""
+ */
 
 namespace App\Controller;
 
 use App\Entity\Property;
 use App\Repository\PropertyRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-class PropertyController extends AbstractController {
+/**
+ * PropertyController Class Doc Comment
+ *
+ * @category Class
+ * @package  Estate_Agency
+ * @author   LauraDev <contact@lauradev.fr>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     ""
+ */
+class PropertyController extends AbstractController
+{
 
-  /**
-   * @var ObjectManager
-   */
-  private $em;
-
-  /**
-   * @var PropertyRepository
-   */
-  private $repository;
-
-  public function __construct(
-    ObjectManager $em,
-    PropertyRepository $repository
-  )
-  {
-    $this->em = $em;
-    $this->repository = $repository;
-  }
-
-
-  /**
-   * @return Response
-   */
-  public function list(PaginatorInterface $paginator, Request $request): Response
-  {
-    $properties = $paginator->paginate(
-      $this->repository->findAllNotSoldQuery(),
-      $request->query->getInt('page', 1), 12
-    );
-
-    return $this->render('pages/property/list.html.twig', [
-      'properties' => $properties,
-      'active_page' => 'properties'
-    ]);
-  }
-
-  /**
-   * @return Response
-   */
-  public function detail(Property $property, string $slug): Response // here the request to find the property using it's id is automatically done
-  {
-    if ($property->getSlug() !== $slug)
+    /**
+     * Action displaying a list of all "not sold" properties
+     * 
+     * @param PaginatorInterface $paginator  Knp Paginator Bunble
+     * @param Request            $request    represents an HTTP request
+     * @param PropertyRepository $repository Property Repository
+     * 
+     * @return Response
+     */
+    public function list(PaginatorInterface $paginator, Request $request, PropertyRepository $repository): Response
     {
-      return $this->redirectToRoute('property.detail', [
-        'id' => $property->getId(),
-        'slug' => $property->getSlug()
-      ], 301);
-    }
-    return $this->render('pages/property/detail.html.twig', [
-      'property' => $property,
-      'active_page' => 'properties'
-    ]);
-  }
+        $properties = $paginator->paginate(
+            $repository->findAllNotSoldQuery(),
+            $request->query->getInt('page', 1),
+            12
+        );
 
+        return $this->render(
+            'pages/property/list.html.twig',
+            [
+                'properties' => $properties,
+                'active_page' => 'properties'
+            ]
+        );
+    }
+
+    /**
+     * Action displaying the detail of a property
+     * 
+     * @param Property $property to display
+     * @param string   $slug     of the property
+     * 
+     * @return Response
+     */
+    public function detail(Property $property, string $slug): Response
+    {
+        if ($property->getSlug() !== $slug) {
+            return $this->redirectToRoute(
+                'property.detail',
+                [
+                    'id' => $property->getId(),
+                    'slug' => $property->getSlug()
+                ],
+                301
+            );
+        }
+
+        return $this->render(
+            'pages/property/detail.html.twig',
+            [
+                'property' => $property,
+                'active_page' => 'properties'
+            ]
+        );
+    }
 }

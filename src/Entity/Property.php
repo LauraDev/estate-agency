@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Property File Doc Comment
+ * PHP version 7.3
+ * 
+ * @category Class
+ * @package  Estate_Agency
+ * @author   LauraDev <contact@lauradev.fr>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     ""
+ */
+
 namespace App\Entity;
 
 use Cocur\Slugify\Slugify;
@@ -8,12 +19,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * Property Class Doc Comment
+ * 
+ * @category Class
+ * @package  Estate_Agency
+ * @author   LauraDev <contact@lauradev.fr>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     ""
+ * 
  * @ORM\Entity(repositoryClass="App\Repository\PropertyRepository")
  * @UniqueEntity("title")
  */
 class Property
 {
-    const heat = [
+    const HEAT = [
         0 => 'Electrique',
         1 => 'Gaz'
     ];
@@ -208,7 +227,7 @@ class Property
 
     public function getHeatType(): ?string
     {
-        return self::heat[$this->heat];
+        return self::HEAT[$this->heat];
     }
 
     public function setHeat(?int $heat): self

@@ -1,4 +1,14 @@
 <?php
+/**
+ * User File Doc Comment
+ * PHP version 7.3
+ * 
+ * @category Class
+ * @package  Estate_Agency
+ * @author   LauraDev <contact@lauradev.fr>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     ""
+ */
 
 namespace App\Entity;
 
@@ -6,6 +16,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * User Class Doc Comment
+ * 
+ * @category Class
+ * @package  Estate_Agency
+ * @author   LauraDev <contact@lauradev.fr>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     ""
+ * 
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface, \Serializable

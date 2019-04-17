@@ -1,4 +1,14 @@
 <?php
+/**
+ * PropertyRepository File Doc Comment
+ * PHP version 7.3
+ * 
+ * @category Class
+ * @package  Estate_Agency
+ * @author   LauraDev <contact@lauradev.fr>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     ""
+ */
 
 namespace App\Repository;
 
@@ -9,6 +19,14 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
 
 /**
+ * PropertyRepository Class Doc Comment
+ * 
+ * @category Class
+ * @package  Estate_Agency
+ * @author   LauraDev <contact@lauradev.fr>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     ""
+ * 
  * @method Property|null find($id, $lockMode = null, $lockVersion = null)
  * @method Property|null findOneBy(array $criteria, array $orderBy = null)
  * @method Property[]    findAll()
@@ -16,70 +34,52 @@ use Doctrine\ORM\Query;
  */
 class PropertyRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructor
+     * 
+     * @param RegistryInterface $registry Registry Interface
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Property::class);
     }
 
-    // /**
-    //  * @return Property[] Returns an array of Property objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Property
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
-
     /**
+     * Find all properties which are not sold
+     * 
      * @return Query
      */
     public function findAllNotSoldQuery() : Query
     {
-        return $this->findNotSoldQuery()
-                    ->getQuery()
-        ;
+        return $this
+            ->findNotSoldQuery()
+            ->getQuery();
     }
 
     /**
+     * Find the last 4 properties - not sold
+     * 
      * @return Property[]
      */
     public function findLatest() : array
     {
-        return $this->findNotSoldQuery()
-                    ->setMaxResults(4)
-                    ->getQuery()
-                    ->getResult()
-        ;
+        return $this
+            ->findNotSoldQuery()
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
     }
 
     /**
-     * @return Property[]
+     * Create the query to find the not sold properties
+     * 
+     * @return QueryBuilder
      */
     private function findNotSoldQuery() : QueryBuilder
     {
-        return $this->createQueryBuilder('p')
+        return $this
+            ->createQueryBuilder('p')
             ->where('p.sold = false')
-            ->orderBy('p.created_at', 'ASC')
-        ;
+            ->orderBy('p.created_at', 'ASC');
     }
 }

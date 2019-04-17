@@ -1,47 +1,50 @@
 <?php
+/**
+ * SecurityController File Doc Comment
+ * PHP version 7.3
+ * 
+ * @category Class
+ * @package  Estate_Agency
+ * @author   LauraDev <contact@lauradev.fr>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     ""
+ */
 
 namespace App\Controller;
 
-use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class SecurityController extends AbstractController {
-
-  /**
-   * @var UserRepository
-   */
-  private $repository;
+/**
+ * SecurityController Class Doc Comment
+ * 
+ * @category Class
+ * @package  Estate_Agency
+ * @author   LauraDev <contact@lauradev.fr>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     ""
+ */
+class SecurityController extends AbstractController
+{
 
     /**
-   * @var ObjectManager
-   */
-  private $em;
+     * Login Action
+     * 
+     * @param AuthenticationUtils $authUtils get last error/username
+     * 
+     * @return Response
+     */
+    public function login(AuthenticationUtils $authUtils): Response
+    {
+        $lastUsername = $authUtils->getLastUsername();
+        $error = $authUtils->getLastAuthenticationError();
 
-  public function __construct(
-    ObjectManager $em,
-    UserRepository $repository
-  )
-  {
-    $this->em = $em;
-    $this->repository = $repository;
-  }
-
-  /**
-   * @return Response
-   * @param UserRepository $repository
-   */
-  public function login(AuthenticationUtils $authUtils): Response
-  {
-    $lastUsername = $authUtils->getLastUsername();
-    $error = $authUtils->getLastAuthenticationError();
-
-    return $this->render("security/login.html.twig", [
-      'last_username' => $lastUsername,
-      'error' => $error
-    ]);
-  }
-
+        return $this->render(
+            "security/login.html.twig", [
+                'last_username' => $lastUsername,
+                'error' => $error
+            ]
+        );
+    }
 }

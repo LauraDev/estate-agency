@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * PropertyType File Doc Comment
+ * PHP version 7.3
+ * 
+ * @category Class
+ * @package  Estate_Agency
+ * @author   LauraDev <contact@lauradev.fr>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     ""
+ */
+
 namespace App\Form;
 
 use App\Entity\Property;
@@ -8,8 +19,25 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
+/**
+ * PropertyType Class Doc Comment
+ * 
+ * @category Class
+ * @package  Estate_Agency
+ * @author   LauraDev <contact@lauradev.fr>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     ""
+ */
 class PropertyType extends AbstractType
 {
+    /**
+     * Build Property Form
+     * 
+     * @param FormBuilderInterface $builder FormBuilderInterface
+     * @param array                $options Options
+     * 
+     * @return array
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -24,26 +52,37 @@ class PropertyType extends AbstractType
             ->add('city')
             ->add('address')
             ->add('postcode')
-            ->add('sold')
-        ;
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => Property::class,
-            'translation_domain' => 'forms' //think about changing locale var in services.yaml
-        ]);
+            ->add('sold');
     }
 
     /**
+     * Get heat choices elements
+     * 
+     * @param OptionsResolver $resolver Options Resolver
+     * 
+     * @return array
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            [
+                'data_class' => Property::class,
+                'translation_domain' => 'forms' 
+                // To display french, think about changing the locale var in services.yaml
+            ]
+        );
+    }
+
+    /**
+     * Get heat choices elements 
+     * 
      * @return array
      */
     private function getChoices(): array
     {
-        $choices = Property::heat;
+        $choices = Property::HEAT;
         $output = [];
-        foreach( $choices as $index => $value) {
+        foreach ( $choices as $index => $value) {
             $output[$value] =  $index;
         }
         return $output;

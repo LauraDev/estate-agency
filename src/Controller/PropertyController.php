@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Property;
+use App\Repository\PropertyRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Repository\PropertyRepository;
-use Doctrine\Common\Persistence\ObjectManager;
-use App\Entity\Property;
+use Symfony\Component\HttpFoundation\Request;
 
 class PropertyController extends AbstractController {
 
@@ -33,9 +35,12 @@ class PropertyController extends AbstractController {
   /**
    * @return Response
    */
-  public function list(): Response
+  public function list(PaginatorInterface $paginator, Request $request): Response
   {
-    $properties = $this->repository->findAllNotSold();
+    $properties = $paginator->paginate(
+      $this->repository->findAllNotSoldQuery(),
+      $request->query->getInt('page', 1), 12
+    );
 
     return $this->render('pages/property/list.html.twig', [
       'properties' => $properties,

@@ -10,14 +10,13 @@
  * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
  * @link     ""
  */
-
 namespace App\Form;
 
-use App\Entity\Property;
+use App\Entity\PropertySearch;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 /**
  * PropertyType Class Doc Comment
@@ -28,7 +27,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
  * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
  * @link     ""
  */
-class PropertyType extends AbstractType
+class PropertySearchType extends AbstractType
 {
     /**
      * Build Property Form
@@ -41,48 +40,29 @@ class PropertyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('description')
-            ->add('surface')
-            ->add('rooms')
-            ->add('bedrooms')
-            ->add('floor')
-            ->add('price')
-            ->add('heat', ChoiceType::class, ["choices" => $this->getChoices()])
-            ->add('city')
-            ->add('address')
-            ->add('postcode')
-            ->add('sold');
+            ->add('maxPrice', IntegerType::class, ['required' => false])
+            ->add('minSurface', IntegerType::class, ['required' => false]);
     }
 
     /**
      * Form options
      * 
-     * @param OptionsResolver $resolver Options 
+     * @param OptionsResolver $resolver Options Resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [
-                'data_class' => Property::class,
-                'translation_domain' => 'forms' 
-                // To display french, think about changing the locale var in services.yaml
+                'data_class' => PropertySearch::class,
+                'translation_domain' => 'forms',
+                'method' => 'get',
+                'csrf_protection' => false
             ]
         );
     }
 
-    /**
-     * Get heat choices elements 
-     * 
-     * @return array
-     */
-    private function getChoices(): array
+    public function getBlockPrefix()
     {
-        $choices = Property::HEAT;
-        $output = [];
-        foreach ( $choices as $index => $value) {
-            $output[$value] =  $index;
-        }
-        return $output;
+        return '';
     }
 }

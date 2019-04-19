@@ -18,6 +18,8 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use App\Entity\PropertySearch;
+use App\Form\PropertySearchType;
 
 /**
  * PropertyController Class Doc Comment
@@ -42,17 +44,25 @@ class PropertyController extends AbstractController
      */
     public function list(PaginatorInterface $paginator, Request $request, PropertyRepository $repository): Response
     {
+        
+        $search = new PropertySearch();
+
+        $form = $this->createForm(PropertySearchType::class, $search);
+        $form->handleRequest($request);
+        
         $properties = $paginator->paginate(
-            $repository->findAllNotSoldQuery(),
+            $repository->findAllNotSoldQuery($search),
             $request->query->getInt('page', 1),
             12
         );
+        
 
         return $this->render(
             'pages/property/list.html.twig',
             [
                 'properties' => $properties,
-                'active_page' => 'properties'
+                'active_page' => 'properties',
+                'form' => $form->createView()
             ]
         );
     }

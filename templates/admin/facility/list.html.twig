@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Gerer les amenagements' %}
+
+{% block body %}
+    <div class="container mt-4">
+
+        <h1>Gerer les amenagements</h1>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-info"> {{message}} </div>
+        {% endfor %}
+    
+        <div class="text-right">
+            <a href="{{ path('admin.facility.create') }}"
+            class="btn btn-primary">Ajouter un amenagement</a>
+        </div>
+
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for facility in facilities %}
+                <tr>
+                    <td>{{ facility.id }}</td>
+                    <td>{{ facility.name }}</td>
+                    <td>
+                        <a 
+                            href="{{ path('admin.facility.edit', {'id': facility.id}) }}"
+                            class="btn btn-secondary">
+                            Modifier
+                        </a>
+                        {% include "admin/facility/_delete_form.html.twig" %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">Aucun amenagement n'existe pour le moment.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}

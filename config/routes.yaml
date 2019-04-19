@@ -19,9 +19,9 @@ admin:
 logout:
   path: /deconnexion
 
-admin.property.index:
+admin.property.list:
   path: /admin/property
-  controller: App\Controller\Admin\AdminPropertyController::index
+  controller: App\Controller\Admin\AdminPropertyController::list
 
 admin.property.create:
   path: /admin/property/create

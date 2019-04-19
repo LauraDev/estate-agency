@@ -14,6 +14,8 @@
 namespace App\Entity;
 
 use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -116,9 +118,15 @@ class Property
      */
     private $created_at;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Facility", inversedBy="properties")
+     */
+    private $facilities;
+
     public function __construct()
     {
         $this->created_at = new \DateTime();
+        $this->facilities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -293,6 +301,34 @@ class Property
     public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Facility[]
+     */
+    public function getFacilities(): Collection
+    {
+        return $this->facilities;
+    }
+
+    public function addFacility(Facility $facility): self
+    {
+        if (!$this->facilities->contains($facility)) {
+            $this->facilities[] = $facility;
+            $facility->addProperty($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFacility(Facility $facility): self
+    {
+        if ($this->facilities->contains($facility)) {
+            $this->facilities->removeElement($facility);
+            $facility->removeProperty($this);
+        }
 
         return $this;
     }

@@ -8,14 +8,17 @@
     <div class="jumbotron">
       {{ form_start(form) }}
         <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-2">
           {{form_row(form.minSurface)}}
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
           {{form_row(form.maxPrice)}}
         </div>
         <div class="col-md-4">
-          <button class="btn btn-lg btn-primary">Rechercher</button>
+            {{form_row(form.facilities)}}
+          </div>
+        <div class="col-md-2">
+          <button class="btn btn-primary">Rechercher</button>
         </div>
       </div>
       {{ form_end(form) }}

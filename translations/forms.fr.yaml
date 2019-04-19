@@ -1,14 +1,16 @@
-Title: Titre
-Description: Description du bien
-Surface: Surface
-Rooms: Pieces
-Bedrooms: Chambres
-Floor: Etage
-Price: Prix
-Heat: Chauffage
-City: Ville
 Address: Adresse
-Postcode: Code Postal
-Sold: Vendu
+Bedrooms: Chambres
+City: Ville
+Description: Description du bien
+Facilities: Amenagements
+Floor: Etage
+Heat: Chauffage
 Max price: Prix maximum
 Min surface: Surface minimum
+Name: Nom
+Postcode: Code Postal
+Price: Prix
+Rooms: Pieces
+Sold: Vendu
+Surface: Surface
+Title: Titre

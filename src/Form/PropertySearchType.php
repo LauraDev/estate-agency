@@ -17,6 +17,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Facility;
 
 /**
  * PropertyType Class Doc Comment
@@ -41,7 +43,14 @@ class PropertySearchType extends AbstractType
     {
         $builder
             ->add('maxPrice', IntegerType::class, ['required' => false])
-            ->add('minSurface', IntegerType::class, ['required' => false]);
+            ->add('minSurface', IntegerType::class, ['required' => false])
+            ->add('facilities', EntityType::class, [
+                'required' => false,
+                'class' => Facility::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'attr' => ['id' => 'facilities']
+            ]);
     }
 
     /**

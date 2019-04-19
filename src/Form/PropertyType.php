@@ -18,6 +18,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Facility;
 
 /**
  * PropertyType Class Doc Comment
@@ -52,7 +54,13 @@ class PropertyType extends AbstractType
             ->add('city')
             ->add('address')
             ->add('postcode')
-            ->add('sold');
+            ->add('sold')
+            ->add('facilities', EntityType::class, [
+                'required' => false,
+                'class' => Facility::class,
+                'choice_label' => 'name',
+                'multiple' => true
+            ]);
     }
 
     /**

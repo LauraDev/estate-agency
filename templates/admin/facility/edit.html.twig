@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Modifier l\'amenagement' %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Modifier l'amenagement</h1>
+
+        <div class="text-right">
+            {{ include('admin/facility/_delete_form.html.twig') }}
+        </div>
+
+        {{ include('admin/facility/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    </div>
+{% endblock %}

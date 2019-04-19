@@ -66,7 +66,7 @@ class AdminPropertyController extends AbstractController
      * 
      * @return Response
      */
-    public function index(): Response
+    public function list(): Response
     {
         $properties = $this->repository->findAll();
 
@@ -93,7 +93,7 @@ class AdminPropertyController extends AbstractController
             $this->em->flush();
 
             $this->addFlash('success', 'Le bien "' . $property->getTitle() . '" a ete cree avec succes');
-            return $this->redirectToRoute('admin.property.index');
+            return $this->redirectToRoute('admin.property.list');
         }
 
         return $this->render(
@@ -121,7 +121,7 @@ class AdminPropertyController extends AbstractController
             $this->em->flush();
 
             $this->addFlash('success', 'Le bien "' . $property->getTitle() . '" a ete modifie avec succes');
-            return $this->redirectToRoute('admin.property.index');
+            return $this->redirectToRoute('admin.property.list');
         }
 
         return $this->render(
@@ -148,6 +148,6 @@ class AdminPropertyController extends AbstractController
 
             $this->addFlash('success', 'Le bien "' . $property->getTitle() . '" a ete supprime avec succes');
         }
-        return $this->redirectToRoute('admin.property.index');
+        return $this->redirectToRoute('admin.property.list');
     }
 }

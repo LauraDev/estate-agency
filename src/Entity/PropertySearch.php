@@ -6,21 +6,12 @@
  * @category Class
  * @package  Estate_Agency
  * @author   LauraDev <contact@lauradev.fr>
- * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
- * @link     ""
  */
 
 namespace App\Entity;
 
-/**
- * PropertySearch Class Doc Comment
- * 
- * @category Class
- * @package  Estate_Agency
- * @author   LauraDev <contact@lauradev.fr>
- * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
- * @link     ""
- */
+use Symfony\Component\Validator\Constraints as Assert;
+
 class PropertySearch
 {
     /**
@@ -30,6 +21,56 @@ class PropertySearch
 
     /**
      * @var int|null
+     * @Assert\Range(min="10",max="400")
      */
     private $minSurface;
+
+    /**
+     * Get the value of maxPrice
+     *
+     * @return int|null
+     */ 
+    public function getMaxPrice(): ?int
+    {
+        return $this->maxPrice;
+    }
+
+    /**
+     * Set the value of maxPrice
+     *
+     * @param int|null $maxPrice 
+     *
+     * @return self
+     */ 
+    public function setMaxPrice(int $maxPrice): PropertySearch
+    {
+        $this->maxPrice = $maxPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of minSurface
+     *
+     * @return int|null
+     */ 
+    public function getMinSurface(): ?int
+    {
+        return $this->minSurface;
+    }
+
+    /**
+     * Set the value of minSurface
+     *
+     * @param int|null $minSurface 
+     *
+     * @return self
+     */ 
+    public function setMinSurface(int $minSurface): PropertySearch
+    {
+        $this->minSurface = $minSurface;
+
+        return $this;
+    }
+
 }

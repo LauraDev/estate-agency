@@ -12,6 +12,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
 use App\Entity\Property;
 use App\Repository\PropertyRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -20,6 +21,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\PropertySearch;
 use App\Form\PropertySearchType;
+use App\Form\ContactType;
+use App\Services\ContactService;
 
 /**
  * PropertyController Class Doc Comment
@@ -75,7 +78,12 @@ class PropertyController extends AbstractController
      * 
      * @return Response
      */
-    public function detail(Property $property, string $slug): Response
+    public function detail(
+        ContactService $contactService,
+        Property $property,
+        Request $request,
+        string $slug
+    ): Response
     {
         if ($property->getSlug() !== $slug) {
             return $this->redirectToRoute(
@@ -88,11 +96,29 @@ class PropertyController extends AbstractController
             );
         }
 
+        $contact = new Contact();
+        $contact->setProperty($property);
+        $form = $this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $contactService->sendMessage($contact);
+            $this->addFlash('success', 'Votre message a bien ete envoye');
+            // return $this->redirectToRoute(
+            //     'property.detail',
+            //     [
+            //         'id' => $property->getId(),
+            //         'slug' => $property->getSlug()
+            //     ]
+            // );
+        }
+
         return $this->render(
             'pages/property/detail.html.twig',
             [
                 'property' => $property,
-                'active_page' => 'properties'
+                'active_page' => 'properties',
+                'form' => $form->createView()
             ]
         );
     }

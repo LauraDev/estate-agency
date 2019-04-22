@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div>
+  Une personne souhaite obtenir des informations sur un bien:
+  <br>
+
+  <table>
+    <tr style="border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
+      <th style="padding: 0 15px 0 0;">Propriete</th>
+      <td style="padding: 0 15px;">
+        <a href="{{ url('property.detail', {id: contact.property.id, slug: contact.property.slug} ) }}">
+          {{ contact.property.title}}
+        </a>
+      </td>
+    </tr>
+  </table>
+  <table>
+    <tr style="border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
+      <th style="padding: 0 15px 0 0;">Prenom</th>
+      <td style="padding: 0 15px;">{{ contact.firstname}}</td>
+    </tr>
+  </table>
+  <table>
+    <tr style="border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
+      <th style="padding: 0 15px 0 0;">Nom</th>
+      <td style="padding: 0 0 0 15px;">{{ contact.lastname}}</td>
+    </tr>
+  </table>
+  
+  <table>
+    <tr style="border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
+      <th style="padding: 0 15px 0 0;">Telephone</th>
+      <td style="padding: 0 15px;">{{ contact.phone}}</td>
+    </tr>
+  </table>
+  
+  <table>
+    <tr style="border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
+      <th style="padding: 0 15px 0 0;">Message</th>
+      <td style="padding: 0 15px;">{{contact.message | nl2br}}}</td>
+    </tr>
+  </table>
+</div>
+{% endblock %}

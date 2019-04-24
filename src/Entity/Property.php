@@ -135,7 +135,7 @@ class Property
     private $imageFile;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @var string|null
      */
@@ -149,6 +149,7 @@ class Property
     public function __construct()
     {
         $this->created_at = new \DateTime();
+        $this->updated_at = new \DateTime();
         $this->facilities = new ArrayCollection();
     }
 

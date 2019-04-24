@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190419125354 extends AbstractMigration
+final class Version20190424160115 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,10 +22,12 @@ final class Version20190419125354 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
+        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, username VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_8D93D649F85E0677 (username), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE facility (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE property (id INT AUTO_INCREMENT NOT NULL, title VARCHAR(255) NOT NULL, description LONGTEXT DEFAULT NULL, surface INT NOT NULL, rooms INT DEFAULT NULL, bedrooms INT DEFAULT NULL, floor INT DEFAULT NULL, price INT NOT NULL, heat INT DEFAULT NULL, city VARCHAR(255) NOT NULL, address VARCHAR(255) NOT NULL, postcode VARCHAR(255) NOT NULL, sold TINYINT(1) DEFAULT \'0\' NOT NULL, created_at DATETIME NOT NULL, image_name VARCHAR(255) NOT NULL, updated_at DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE property_facility (property_id INT NOT NULL, facility_id INT NOT NULL, INDEX IDX_4EDEA0F6549213EC (property_id), INDEX IDX_4EDEA0F6A7014910 (facility_id), PRIMARY KEY(property_id, facility_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('ALTER TABLE property_facility ADD CONSTRAINT FK_4EDEA0F6549213EC FOREIGN KEY (property_id) REFERENCES property (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE property_facility ADD CONSTRAINT FK_4EDEA0F6A7014910 FOREIGN KEY (facility_id) REFERENCES facility (id) ON DELETE CASCADE');
-        $this->addSql('DROP TABLE facility_property');
     }
 
     public function down(Schema $schema) : void
@@ -33,9 +35,11 @@ final class Version20190419125354 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE facility_property (facility_id INT NOT NULL, property_id INT NOT NULL, INDEX IDX_DDF1A551A7014910 (facility_id), INDEX IDX_DDF1A551549213EC (property_id), PRIMARY KEY(facility_id, property_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB COMMENT = \'\' ');
-        $this->addSql('ALTER TABLE facility_property ADD CONSTRAINT FK_DDF1A551549213EC FOREIGN KEY (property_id) REFERENCES property (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE facility_property ADD CONSTRAINT FK_DDF1A551A7014910 FOREIGN KEY (facility_id) REFERENCES facility (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE property_facility DROP FOREIGN KEY FK_4EDEA0F6A7014910');
+        $this->addSql('ALTER TABLE property_facility DROP FOREIGN KEY FK_4EDEA0F6549213EC');
+        $this->addSql('DROP TABLE user');
+        $this->addSql('DROP TABLE facility');
+        $this->addSql('DROP TABLE property');
         $this->addSql('DROP TABLE property_facility');
     }
 }

@@ -31,6 +31,30 @@
             <div class="text-primary" style="font-size:2rem;font-weight:bold">{{property.formattedPrice}} €</div>
             <a href="#"
               class="btn btn-primary mt-4">Contacter l'agence</a>
+            {% for message in app.flashes('success') %}
+              <div class="alert alert-info"> {{message}} </div>
+            {% else %}
+              {% if not form.vars.valid %}
+                <div class="alert alert-danger"> Erreur sur le formulaire </div>
+              {% endif %}
+              
+              <div id="contactForm" class="mt-4">
+                {{ form_start(form) }}
+                  <div class="row">
+                    <div class="col">{{ form_row(form.firstname) }}</div>
+                    <div class="col">{{ form_row(form.lastname) }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col">{{ form_row(form.phone) }}</div>
+                    <div class="col">{{ form_row(form.mail) }}</div>
+                  </div>
+                  {{ form_rest(form) }}
+                  <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Envoyer</button>
+                  </div>
+                {{ form_end(form) }}
+              </div>
+            {% endfor %}
           </div>
         </div>
       </div>
